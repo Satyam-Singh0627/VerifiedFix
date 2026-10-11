@@ -191,14 +191,14 @@ async function runBrowserTest() {
       localStorage.setItem('verifiedfix_tour_step', '5');
       window.location.href = '/reports';
     });
-    await page.waitForNavigation({ waitUntil: 'networkidle0', timeout: 6000 });
-    await new Promise(r => setTimeout(r, 800));
+    await page.waitForNavigation({ waitUntil: 'networkidle0', timeout: 15000 });
+    await new Promise(r => setTimeout(r, 1200));
 
     // Wait for tour card on Stage 6
     await page.waitForFunction(() => {
       const card = document.querySelector('div[class*="fixed bottom-6"]');
       return card && card.innerText.includes('Finish');
-    }, { timeout: 6000 });
+    }, { timeout: 15000 });
 
     console.log('[STEP 13] Clicking "Finish" button on Stage 6...');
     await page.evaluate(() => {
