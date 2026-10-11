@@ -45,12 +45,12 @@ class AIService:
             ),
             "vulnerability_class": "Broken Access Control (IDOR - Insecure Direct Object Reference)",
             "cwe": "CWE-639: Authorization Bypass Through User-Controlled Key",
-            "owasp": "A01:2021 - Broken Access Control",
+            "owasp": "A01 Broken Access Control",
             "vulnerable_code_location": "backend/app/services/document_service.py:get_document_with_auth_check",
             "missing_check": "if not (user.role == 'admin' or doc.owner_id == user.id or has_explicit_share(user, doc)): raise HTTPException(403)",
             "impact": (
-                "Confidentiality breach: Unauthorized users can exfiltrate sensitive corporate documents, "
-                "bypassing tenant boundaries and access control tiers."
+                "Confidentiality breach: Unauthorized users can access sensitive corporate documents, "
+                "bypassing user boundaries and access control tiers."
             ),
             "remediation": (
                 "Enforce the centralized authorization policy on all document retrieval routes before returning "

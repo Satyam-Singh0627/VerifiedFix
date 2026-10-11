@@ -78,7 +78,7 @@ export const Scans: React.FC = () => {
             Stage 1 — Security Scans & Boundary Inspector
           </h1>
           <p className="text-xs text-[#A6B0A7] mt-1">
-            Active multi-tenant authorization testing against the DocVault target application
+            Active multi-user authorization testing against the DocVault target application
           </p>
         </div>
 
@@ -116,8 +116,8 @@ export const Scans: React.FC = () => {
           <Server className="w-8 h-8 text-[#54D6BE] p-1.5 rounded-lg bg-[#282E29]" />
           <div>
             <div className="text-[10px] text-[#A6B0A7] uppercase font-bold">Target Application</div>
-            <div className="text-xs font-bold text-[#F1F0E8]">DocVault Enterprise Portal</div>
-            <div className="text-[10px] text-[#54D6BE] font-mono">{getTargetUrl()} (Isolated Sandbox)</div>
+            <div className="text-xs font-bold text-[#F1F0E8]">DocVault Demo Portal</div>
+            <div className="text-[10px] text-[#54D6BE] font-mono">DocVault Demo Portal (isolated sandbox)</div>
           </div>
         </div>
 
@@ -126,7 +126,7 @@ export const Scans: React.FC = () => {
           <div>
             <div className="text-[10px] text-[#A6B0A7] uppercase font-bold">Scope of Checks</div>
             <div className="text-xs font-bold text-[#F1F0E8]">7 Authorization Vectors</div>
-            <div className="text-[10px] text-[#A6B0A7]">Owner, Attacker, Recipient, Admin, Auth</div>
+            <div className="text-[10px] text-[#A6B0A7]">Owner, Attacker, Shared User, Admin, Auth</div>
           </div>
         </div>
 

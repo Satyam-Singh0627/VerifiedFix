@@ -29,7 +29,13 @@ import { ContextualHelp } from '../components/ContextualHelp';
 
 export const DocVaultPortal: React.FC = () => {
   const { addToast } = useToast();
-  const [currentUser, setCurrentUser] = useState<UserType | null>(null);
+  const [currentUser, setCurrentUser] = useState<UserType | null>({
+    id: 2,
+    username: 'bob',
+    email: 'bob@docvault.local',
+    full_name: 'Bob Miller (Contractor)',
+    role: 'user'
+  });
   const [documents, setDocuments] = useState<DocumentItem[]>([]);
   const [selectedDoc, setSelectedDoc] = useState<DocumentItem | null>(null);
   const [loading, setLoading] = useState(false);
@@ -124,9 +130,17 @@ export const DocVaultPortal: React.FC = () => {
       setManualAccessResult({ status: 200, doc });
       addToast(`Unauthorized access permitted to Document #${id} (HTTP 200 OK)`, 'error');
     } catch (err: any) {
-      const status = err.status || 403;
-      setManualAccessResult({ status, error: err.message });
-      addToast(`Access forbidden as intended (HTTP ${status})`, 'success');
+      const status = typeof err.status === 'number' ? err.status : 0;
+      if (status === 403) {
+        setManualAccessResult({ status: 403, error: err.message || 'Access denied by authorization policy' });
+        addToast('Access forbidden as intended (HTTP 403)', 'success');
+      } else {
+        const errorMsg = status === 0
+          ? 'Could not reach the backend, please try again.'
+          : (err.message || `Request failed (HTTP ${status})`);
+        setManualAccessResult({ status: status || 500, error: errorMsg });
+        addToast(errorMsg, 'error');
+      }
     } finally {
       setTestingAccess(false);
     }
@@ -195,7 +209,7 @@ export const DocVaultPortal: React.FC = () => {
     <div className="space-y-6 pb-12">
       {/* Contextual Help */}
       <ContextualHelp
-        title="DocVault Architecture & Multi-Tenant Target"
+        title="DocVault Architecture & Multi-User Target"
         defaultExpanded={false}
         tourStepTarget={1}
         items={[
@@ -226,7 +240,7 @@ export const DocVaultPortal: React.FC = () => {
             </div>
             <h1 className="text-2xl font-black text-[#F1F0E8]">DocVault Document Portal</h1>
             <p className="text-xs text-[#A6B0A7] max-w-2xl leading-relaxed">
-              Real SQLite-backed multi-tenant document repository. Log in as different demo identities to observe
+              Real SQLite-backed multi-user document repository. Log in as different demo identities to observe
               access control behavior before and after VerifiedFix applies the verified authorization patch.
             </p>
           </div>
@@ -301,7 +315,7 @@ export const DocVaultPortal: React.FC = () => {
         </div>
 
         <p className="text-xs text-[#A6B0A7] leading-relaxed">
-          Logged in as <strong className="text-[#F1F0E8]">{currentUser?.username}</strong> ({currentUser?.role}). Test whether this identity can
+          Logged in as <strong className="text-[#F1F0E8]">{currentUser?.username || 'bob'}</strong> ({currentUser?.role || 'user'}). Test whether this identity can
           access private resources by directly requesting the document identifier. (Try Document ID{' '}
           <strong className="text-[#B8F36B] font-mono">12</strong>, which belongs strictly to Alice).
         </p>
@@ -334,7 +348,9 @@ export const DocVaultPortal: React.FC = () => {
             className={`p-4 rounded-xl border text-xs space-y-2 animate-fade-in ${
               manualAccessResult.status === 200
                 ? 'bg-[#F28B69]/10 border-[#F28B69]/40 text-[#F28B69]'
-                : 'bg-[#54D6BE]/10 border-[#54D6BE]/40 text-[#54D6BE]'
+                : manualAccessResult.status === 403
+                ? 'bg-[#54D6BE]/10 border-[#54D6BE]/40 text-[#54D6BE]'
+                : 'bg-rose-500/15 border-rose-500/40 text-rose-400'
             }`}
           >
             <div className="flex items-center justify-between font-bold">
@@ -344,10 +360,15 @@ export const DocVaultPortal: React.FC = () => {
                     <Unlock className="w-4 h-4 text-[#F28B69]" />
                     <span>UNAUTHORIZED ACCESS PERMITTED (HTTP 200 OK — VULNERABILITY CONFIRMED)</span>
                   </>
-                ) : (
+                ) : manualAccessResult.status === 403 ? (
                   <>
                     <Lock className="w-4 h-4 text-[#54D6BE]" />
-                    <span>ACCESS BLOCKED AS INTENDED (HTTP {manualAccessResult.status} FORBIDDEN — SECURE)</span>
+                    <span>ACCESS BLOCKED AS INTENDED (HTTP 403 FORBIDDEN — SECURE)</span>
+                  </>
+                ) : (
+                  <>
+                    <AlertCircle className="w-4 h-4 text-rose-400" />
+                    <span>REQUEST FAILED (HTTP {manualAccessResult.status} — BACKEND / NETWORK ERROR)</span>
                   </>
                 )}
               </span>
@@ -363,8 +384,8 @@ export const DocVaultPortal: React.FC = () => {
                 </div>
               </div>
             ) : (
-              <div className="text-xs text-[#A6B0A7]">
-                Server Response: <code className="text-[#54D6BE] font-mono">{manualAccessResult.error || 'Access denied by authorization policy'}</code>
+              <div className="text-xs">
+                Server Response: <code className={`font-mono ${manualAccessResult.status === 403 ? 'text-[#54D6BE]' : 'text-rose-400'}`}>{manualAccessResult.error || 'Could not reach the backend, please try again.'}</code>
               </div>
             )}
           </div>
@@ -376,7 +397,7 @@ export const DocVaultPortal: React.FC = () => {
         <div className="px-6 py-4 bg-[#282E29] border-b border-[#39433B] flex items-center justify-between">
           <h2 className="text-sm font-bold text-[#F1F0E8] flex items-center gap-2">
             <FileText className="w-4 h-4 text-[#B8F36B]" />
-            Documents Accessible to {currentUser?.full_name} ({documents.length})
+            Documents Accessible to {currentUser?.full_name || 'Bob Miller (Contractor)'} ({documents.length})
           </h2>
           <span className="text-xs text-[#A6B0A7]">Policy: Owner + Explicit Shared + Admin</span>
         </div>

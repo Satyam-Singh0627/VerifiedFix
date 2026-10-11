@@ -18,11 +18,11 @@ export const TOUR_STEPS: TourStep[] = [
     stageName: 'DETECT',
     path: '/scans',
     targetSelector: '[data-tour="scan-controls"]',
-    title: 'Stage 1 — Detect Weaknesses Across Tenant Boundaries',
+    title: 'Stage 1 — Detect Weaknesses Across User Boundaries',
     description:
       'VerifiedFix begins by actively testing application authorization boundaries across multiple identities. Start by running a scan against the local DocVault demo target.',
     whyItMatters:
-      'Security scans must test actual multi-tenant access controls and response behaviors, not merely perform static text matching.',
+      'Security scans must test actual multi-user access controls and response behaviors, not merely perform static text matching.',
     actionHint: 'Click "Initiate Security Scan" to execute empirical checks against the local sandbox.',
   },
   {

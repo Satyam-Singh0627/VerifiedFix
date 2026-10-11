@@ -97,8 +97,8 @@ class Finding(Base):
     scan_id = Column(String(50), ForeignKey("scans.scan_id"), nullable=False)
     title = Column(String(255), nullable=False)
     category = Column(String(100), default="Broken Access Control (IDOR)")
-    cwe_id = Column(String(50), default="CWE-639 / OWASP A01:2021")
-    severity = Column(String(20), default="High")  # "Critical", "High", "Medium", "Low"
+    cwe_id = Column(String(50), default="CWE-639 / OWASP A01 Broken Access Control")
+    severity = Column(String(20), default="Medium")  # "Critical", "High", "Medium", "Low"
     severity_rationale = Column(Text, nullable=False)
     affected_endpoint = Column(String(200), nullable=False)
     affected_object_id = Column(String(50), nullable=False)

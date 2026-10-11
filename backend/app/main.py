@@ -34,7 +34,7 @@ app = FastAPI(
     description=(
         "Developed by Team ByteForce for 'The Verified Fix' Hackathon.\n\n"
         "Core workflow: Detect → Prove → Explain → Patch → Verify → Report.\n"
-        "Target Application: DocVault Enterprise Document Portal (IDOR Baseline Demo)."
+        "Target Application: DocVault Demo Portal (IDOR Baseline Demo)."
     ),
     version="1.0.0",
     docs_url="/docs",

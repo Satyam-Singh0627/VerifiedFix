@@ -140,7 +140,7 @@ export const Overview: React.FC<OverviewProps> = ({ onRefreshStats }) => {
       default:
         return {
           title: 'Ready for Security Verification',
-          desc: 'Target application is running in baseline state. Start the guided tour or run a scan to detect tenant boundaries.',
+          desc: 'Target application is running in baseline state. Start the guided tour or run a scan to detect user boundaries.',
           badge: 'NOT SCANNED',
           color: 'border-[#39433B] bg-[#202521] text-[#A6B0A7]',
           icon: Lock,
@@ -162,7 +162,7 @@ export const Overview: React.FC<OverviewProps> = ({ onRefreshStats }) => {
         details={[
           'The status banner below reflects the true state of the backend database, never hardcoded claims.',
           'Start with the Guided Tour for a step-by-step interactive walkthrough that highlights real buttons.',
-          'Open the DocVault Demo anytime to test multi-tenant access as Alice, Bob, Carol, or Admin directly.',
+          'Open the DocVault Demo anytime to test multi-user access as Alice, Bob, Carol, or Admin directly.',
           'Reset Demo at any point in the top bar to return the database to the baseline vulnerable state.',
         ]}
         tourStageIndex={0}
@@ -279,7 +279,7 @@ export const Overview: React.FC<OverviewProps> = ({ onRefreshStats }) => {
             {
               stage: 1,
               title: 'DETECT',
-              desc: 'Inspects endpoints across 7 tenant vectors',
+              desc: 'Inspects endpoints across 7 user vectors',
               link: '/scans',
               accent: 'border-[#54D6BE]/40 hover:border-[#54D6BE]',
             },

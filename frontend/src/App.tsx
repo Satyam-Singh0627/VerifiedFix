@@ -93,7 +93,7 @@ function AppContent() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-[#39433B] bg-[#202521] py-6 text-center text-xs text-[#A6B0A7] mt-12">
+      <footer className="border-t border-[#39433B] bg-[#202521] py-6 text-center text-xs text-[#A6B0A7] mt-12 print:hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <span className="font-bold text-[#F1F0E8]">VerifiedFix</span>

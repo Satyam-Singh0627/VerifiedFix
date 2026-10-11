@@ -22,7 +22,7 @@ def execute_security_scan(db: Session, target_url: str = None) -> Scan:
 
     scan = Scan(
         scan_id=scan_uuid,
-        target_name="DocVault Enterprise Document Portal",
+        target_name="DocVault Demo Portal",
         target_url=target_url,
         started_at=started_at,
         status="Running",
@@ -113,12 +113,12 @@ def execute_security_scan(db: Session, target_url: str = None) -> Scan:
             scan_id=scan.scan_id,
             title="Insecure Direct Object Reference (IDOR) in Document Retrieval",
             category="Broken Access Control",
-            cwe_id="CWE-639 / OWASP A01:2021",
-            severity="High",
+            cwe_id="CWE-639 / OWASP A01 Broken Access Control",
+            severity="Medium",
             severity_rationale=(
                 "Severity derived from deterministic policy: Unauthorized authenticated user (bob) "
-                "successfully exfiltrated private confidential resource (Document 12) belonging to another tenant (alice) "
-                "via parameter manipulation. CVSS v3.1: 7.5 (High) [CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N]."
+                "successfully accessed private confidential resource (Document 12) belonging to another user (alice) "
+                "via parameter manipulation. CVSS v3.1: 6.5 (Medium) [CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N]."
             ),
             affected_endpoint="/api/documents/{document_id}",
             affected_object_id="12",

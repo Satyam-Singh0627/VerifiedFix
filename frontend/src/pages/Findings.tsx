@@ -85,7 +85,7 @@ export const Findings: React.FC = () => {
         summary="A finding in VerifiedFix is backed by an actual exploit reproduction test, not just an AI opinion or keyword search."
         details={[
           'Plain English: "Bob (an unauthorized user) can view Document #12, which belongs to Alice."',
-          'Technical classification: CWE-639 / OWASP A01:2021 (Broken Access Control via Insecure Direct Object Reference).',
+          'Technical classification: CWE-639 / OWASP A01 Broken Access Control (Broken Access Control via Insecure Direct Object Reference).',
           'Evidence shows the exact HTTP request sent by Bob and the confidential metadata returned by the server.',
           'The Root Cause panel points directly to backend/app/services/document_service.py where the ownership check was skipped.',
         ]}

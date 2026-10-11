@@ -36,7 +36,7 @@ def test_full_security_workflow_end_to_end(client, db_session):
     
     finding = scan_data["findings"][0]
     assert "IDOR" in finding["title"] or "Broken Access Control" in finding["category"]
-    assert finding["severity"] == "High"
+    assert finding["severity"] == "Medium"
     assert finding["affected_object_id"] == "12"
 
     # Step 3: Propose Minimal Patch

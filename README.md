@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688.svg?logo=fastapi)](https://fastapi.tiangolo.com/)
 [![React](https://img.shields.io/badge/Frontend-React%20%2B%20Vite%20%2B%20Tailwind-61DAFB.svg?logo=react)](https://react.dev/)
-[![Tests](https://img.shields.io/badge/Tests-9%20Passed-10b981.svg)](https://docs.pytest.org/)
+[![Tests](https://img.shields.io/badge/Tests-12%20Passed-10b981.svg)](https://docs.pytest.org/)
 
 ---
 
@@ -25,7 +25,7 @@ Unlike conventional static analysis tools or LLM code generation assistants that
        │
 [ 2. PROVE ]  ──────► Controlled exploit reproduction (Bob reads Alice's private Doc #12)
        │
-[ 3. EXPLAIN ]──────► Root cause analysis with exact code locations (CWE-639 / OWASP A01)
+[ 3. EXPLAIN ]──────► Root cause analysis with exact code locations (CWE-639 / OWASP A01 Broken Access Control)
        │
 [ 4. PATCH ]  ──────► Minimal scoped diff proposal with human approval gate (Approve / Reject)
        │
@@ -45,13 +45,13 @@ VerifiedFix inspects and secures a realistic SQLite-backed document portal calle
 | Identity | Username | Password | Role | Purpose in Demo |
 | :--- | :--- | :--- | :--- | :--- |
 | **Alice** | `alice` | `Password123!` | Normal User | Document Owner (Owns confidential Doc #12) |
-| **Bob** | `bob` | `Password123!` | Normal User | Unauthorized Attacker (Contractor tenant) |
-| **Carol** | `carol` | `Password123!` | Normal User | Authorized Recipient (Explicit share on Doc #14) |
+| **Bob** | `bob` | `Password123!` | Normal User | Unauthorized Attacker (contractor) |
+| **Carol** | `carol` | `Password123!` | Normal User | Authorized Shared User (Explicit share on Doc #14) |
 | **Admin** | `admin` | `Password123!` | Administrator | System Administrator (Authorized audit access) |
 
 ### Centralized Authorization Policy
 
-| Action | Document Owner | Authorized Recipient (Share) | System Admin | Outsider / Non-Owner |
+| Action | Document Owner | Authorized Shared User (Share) | System Admin | Outsider / Non-Owner |
 | :--- | :---: | :---: | :---: | :---: |
 | **View Private Document** | ✅ Allow | ❌ Deny | ✅ Allow | ❌ Deny |
 | **View Shared Document** | ✅ Allow | ✅ Allow | ✅ Allow | ❌ Deny |
@@ -136,8 +136,8 @@ Follow this step-by-step path for judging presentations:
 
 2. **Run Security Scan (20s):**
    - Navigate to **Security Scans** (or click **Run Security Scan** on the Overview).
-   - Observe live scan execution across 7 tenant boundary checks.
-   - Confirm finding: *Insecure Direct Object Reference (CWE-639)* with High severity.
+   - Observe live scan execution across 7 user boundary checks.
+   - Confirm finding: *Insecure Direct Object Reference (CWE-639)* with Medium severity (CVSS 6.5).
 
 3. **Inspect Finding & Root Cause (20s):**
    - Click **Findings**.
