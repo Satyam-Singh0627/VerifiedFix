@@ -105,12 +105,18 @@ def generate_security_report(db: Session, scan_id: Optional[str] = None) -> Dict
     report_id = f"REP-{now_utc.strftime('%Y%m%d%H%M%S')}"
     generated_at = now_utc.isoformat()
 
-    is_verified = bool(verification and verification.status in ["Fix Verified", "Verified"])
+    is_verified = bool(
+        verification
+        and verification.status in ["Fix Verified", "Verified"]
+        and verification.passed_tests == 10
+        and patch
+        and patch.status == "applied"
+    )
 
     # Construct preliminary report payload for digest computation
     payload_to_hash = {
         "report_id": report_id,
-        "target_application": "DocVault Enterprise Portal (IDOR Baseline Demo)",
+        "target_application": "DocVault Demo Portal (IDOR Baseline Demo)",
         "scan_id": scan.scan_id if scan else None,
         "finding_cwe": finding.cwe_id if finding else None,
         "patch_id": patch.patch_id if patch else None,
@@ -125,7 +131,7 @@ def generate_security_report(db: Session, scan_id: Optional[str] = None) -> Dict
         "report_id": report_id,
         "generated_at": generated_at,
         "platform": "VerifiedFix — Team ByteForce",
-        "target_application": "DocVault Enterprise Portal (IDOR Baseline Demo)",
+        "target_application": "DocVault Demo Portal (IDOR Baseline Demo)",
         "scan_summary": {
             "scan_id": scan.scan_id if scan else "N/A",
             "started_at": scan.started_at.isoformat() if scan else None,

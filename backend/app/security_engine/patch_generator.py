@@ -56,7 +56,7 @@ def generate_minimal_patch_proposal(db: Session, finding_id: Optional[int] = Non
         title="Enforce Centralized Document Access Authorization Policy",
         description=(
             "Adds missing ownership, administrative override, and explicit sharing verification "
-            "to document retrieval, blocking unauthorized tenant traversal while preserving legitimate access."
+            "to document retrieval, blocking unauthorized cross-user access while preserving legitimate access."
         ),
         security_rationale=(
             "Direct Object References (IDs) must not be trusted without verifying the requester's "

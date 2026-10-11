@@ -19,6 +19,7 @@ import { DiffViewer } from '../components/DiffViewer';
 import { ContextualHelp } from '../components/ContextualHelp';
 import { ConfirmationModal } from '../components/ConfirmationModal';
 import { useToast } from '../context/ToastContext';
+import { formatIstDateTime } from '../utils/date';
 
 interface PatchReviewProps {
   onStateChange: () => void;
@@ -271,11 +272,11 @@ export const PatchReview: React.FC<PatchReviewProps> = ({ onStateChange }) => {
               <div className="pt-4 border-t border-[#39433B] flex items-center gap-4 text-[11px] text-[#A6B0A7]">
                 <div className="flex items-center gap-1.5">
                   <UserCheck className="w-3.5 h-3.5 text-[#54D6BE]" />
-                  <span>Reviewer Signature: <strong className="text-[#F1F0E8]">{activePatch.reviewer}</strong></span>
+                  <span>Reviewer Signature: <strong className="text-[#F1F0E8]">{activePatch.reviewer} (demo identity)</strong></span>
                 </div>
                 {activePatch.applied_at && (
                   <div>
-                    Applied At: <span className="font-mono text-[#F1F0E8]">{new Date(activePatch.applied_at).toLocaleTimeString()}</span>
+                    Applied At: <span className="font-mono text-[#F1F0E8]">{formatIstDateTime(activePatch.applied_at)}</span>
                   </div>
                 )}
               </div>

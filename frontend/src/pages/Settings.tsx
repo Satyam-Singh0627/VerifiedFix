@@ -174,7 +174,7 @@ export const Settings: React.FC<SettingsProps> = ({ onResetClick, aiProvider }) 
                 <td className="p-3 text-[#54D6BE] font-bold">carol</td>
                 <td className="p-3">Password123!</td>
                 <td className="p-3 text-[#54D6BE]">Collaborator</td>
-                <td className="p-3 font-sans text-[#A6B0A7]">Authorized Recipient (Has explicit share on Document #14)</td>
+                <td className="p-3 font-sans text-[#A6B0A7]">Authorized Shared User (Has explicit share on Document #14)</td>
               </tr>
               <tr>
                 <td className="p-3 text-[#B8F36B] font-bold">admin</td>

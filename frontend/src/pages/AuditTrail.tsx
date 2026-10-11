@@ -4,6 +4,7 @@ import { api } from '../services/api';
 import { AuditEvent } from '../types';
 import { useToast } from '../context/ToastContext';
 import { ContextualHelp } from '../components/ContextualHelp';
+import { formatIstDateTime } from '../utils/date';
 
 export const AuditTrail: React.FC = () => {
   const { addToast } = useToast();
@@ -149,13 +150,11 @@ export const AuditTrail: React.FC = () => {
                   </div>
                   <div className="text-[11px] text-[#A6B0A7] font-sans flex items-center gap-2">
                     <span>Actor: <strong className="text-[#F1F0E8] font-mono">{ev.actor}</strong></span>
-                    <span>•</span>
-                    <span>IP: <span className="font-mono">{ev.ip_address}</span></span>
                   </div>
                 </div>
 
                 <div className="text-[#A6B0A7] text-[11px] whitespace-nowrap bg-[#171A18] px-2.5 py-1 rounded border border-[#39433B]">
-                  {new Date(ev.created_at).toLocaleString()}
+                  {formatIstDateTime(ev.created_at)}
                 </div>
               </div>
             ))}

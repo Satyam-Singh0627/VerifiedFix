@@ -106,7 +106,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   ];
 
   return (
-    <header className="sticky top-0 z-40 bg-[#171A18]/95 backdrop-blur border-b border-[#39433B]">
+    <header className="sticky top-0 z-40 bg-[#171A18]/95 backdrop-blur border-b border-[#39433B] print:hidden">
       {/* Top Header Row */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
