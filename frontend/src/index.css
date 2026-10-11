@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-main: #171A18;
+    --surface-elevated: #202521;
+    --surface-secondary: #282E29;
+    --text-primary: #F1F0E8;
+    --text-secondary: #A6B0A7;
+    --accent-lime: #B8F36B;
+    --accent-emerald: #54D6BE;
+    --border-color: #39433B;
+    --status-error: #F28B69;
+    --status-warning: #E9BC65;
+    --status-success: #54D6BE;
+  }
+
+  body {
+    background-color: #171A18;
+    color: #F1F0E8;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  #root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+}
+
+/* Custom Scrollbars in Obsidian */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #171A18;
+}
+::-webkit-scrollbar-thumb {
+  background: #39433B;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #4B584E;
+}
+
+/* Code Diff Styling */
+.diff-added {
+  background-color: rgba(84, 214, 190, 0.12);
+  border-left: 3px solid #54D6BE;
+  color: #54D6BE;
+}
+.diff-removed {
+  background-color: rgba(242, 139, 105, 0.12);
+  border-left: 3px solid #F28B69;
+  color: #F28B69;
+}
+.diff-context {
+  background-color: transparent;
+  color: #A6B0A7;
+}
+
+/* Guided Tour Spotlight & Pulsing Highlights */
+.tour-highlight {
+  position: relative;
+  z-index: 45;
+  box-shadow: 0 0 0 4px rgba(184, 243, 107, 0.4), 0 0 25px rgba(184, 243, 107, 0.25) !important;
+  border-color: #B8F36B !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
