@@ -42,10 +42,10 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# Enable CORS for local Vite development
+# Enable CORS for exact Vercel production origin and local development
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173", "*"],
+    allow_origins=settings.cors_origins_list,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

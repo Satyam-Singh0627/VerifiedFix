@@ -68,13 +68,17 @@ class SystemSecurityState(Base):
     last_scan_id = Column(String(50), nullable=True)
     updated_at = Column(DateTime, default=utc_now, onupdate=utc_now)
 
+def default_target_url():
+    import os
+    return os.getenv("DOCVAULT_TARGET_URL", "http://localhost:8000")
+
 class Scan(Base):
     __tablename__ = "scans"
 
     id = Column(Integer, primary_key=True, index=True)
     scan_id = Column(String(50), unique=True, index=True, nullable=False)
     target_name = Column(String(100), default="DocVault Document Portal")
-    target_url = Column(String(200), default="http://localhost:8000")
+    target_url = Column(String(200), default=default_target_url)
     started_at = Column(DateTime, default=utc_now)
     completed_at = Column(DateTime, nullable=True)
     status = Column(String(50), default="Running")  # "Running", "Completed", "Failed"

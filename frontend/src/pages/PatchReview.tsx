@@ -46,10 +46,6 @@ export const PatchReview: React.FC<PatchReviewProps> = ({ onStateChange }) => {
     description: '',
   });
 
-  useEffect(() => {
-    loadPatches();
-  }, []);
-
   const loadPatches = async () => {
     try {
       setLoading(true);
@@ -81,6 +77,10 @@ export const PatchReview: React.FC<PatchReviewProps> = ({ onStateChange }) => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    loadPatches();
+  }, []);
 
   const executeAction = async () => {
     if (!activePatch) return;

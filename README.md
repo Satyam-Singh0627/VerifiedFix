@@ -104,9 +104,23 @@ npm run dev
 # Starts Vite dev server on http://localhost:5173
 ```
 
-- **VerifiedFix Dashboard:** [http://localhost:5173](http://localhost:5173)
-- **DocVault Portal Experience:** [http://localhost:5173/docvault](http://localhost:5173/docvault)
-- **FastAPI Interactive Swagger Docs:** [http://localhost:8000/docs](http://localhost:8000/docs)
+- **VerifiedFix Dashboard (Local):** [http://localhost:5173](http://localhost:5173)
+- **DocVault Portal Experience (Local):** [http://localhost:5173/docvault](http://localhost:5173/docvault)
+- **FastAPI Interactive Swagger Docs (Local):** [http://localhost:8000/docs](http://localhost:8000/docs)
+
+### Live Production Deployments
+
+- **Frontend (Vercel):** [https://verified-fix-six.vercel.app/](https://verified-fix-six.vercel.app/)
+- **Backend (Render):** [https://verifiedfix.onrender.com](https://verifiedfix.onrender.com)
+- **Backend Health Check:** [https://verifiedfix.onrender.com/health](https://verifiedfix.onrender.com/health)
+- **Interactive Swagger Docs:** [https://verifiedfix.onrender.com/docs](https://verifiedfix.onrender.com/docs)
+
+#### Deployment Environment Variables
+- **Frontend (`frontend/.env.production` / Vercel Environment Variables):**
+  - `VITE_API_BASE_URL`: Base backend URL (e.g. `https://verifiedfix.onrender.com`). All API endpoints preserve paths (`/api/...`).
+- **Backend (Render Environment Variables):**
+  - `CORS_ORIGINS`: Comma-separated list of allowed origins. Configured to allow `https://verified-fix-six.vercel.app` and localhost development origins.
+  - `DOCVAULT_TARGET_URL`: Target URL for the internal scanner engine (defaults to `http://localhost:8000` or deployment target).
 
 ---
 
@@ -157,6 +171,9 @@ Run the backend test suite via `pytest`:
 
 ### Verified Test Results:
 ```text
+backend/tests/test_cors_and_config.py::test_cors_preflight_vercel_production_origin PASSED
+backend/tests/test_cors_and_config.py::test_cors_preflight_localhost_origin PASSED
+backend/tests/test_cors_and_config.py::test_cors_disallows_untrusted_origin PASSED
 backend/tests/test_docvault.py::test_seeded_identities_login PASSED
 backend/tests/test_docvault.py::test_alice_can_view_her_own_document PASSED
 backend/tests/test_docvault.py::test_bob_can_view_his_own_document PASSED
@@ -167,7 +184,13 @@ backend/tests/test_docvault.py::test_admin_retains_authorized_access PASSED
 backend/tests/test_docvault.py::test_unauthenticated_request_is_rejected PASSED
 backend/tests/test_security_workflow.py::test_full_security_workflow_end_to_end PASSED
 
-======================= 9 passed in 2.05s =======================
+====================== 12 passed in 1.92s ======================
+```
+
+Run remote deployment integration validation:
+```powershell
+.\.venv\Scripts\python.exe backend\tests\test_remote_integration.py
+# Validates 19/19 live checks against Render and Vercel production deployment
 ```
 
 ---

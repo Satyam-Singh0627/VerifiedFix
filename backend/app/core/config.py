@@ -11,6 +11,25 @@ class Settings(BaseSettings):
     # SQLite Database
     DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./verifiedfix.db")
     
+    # CORS Configuration
+    CORS_ORIGINS: str = os.getenv(
+        "CORS_ORIGINS",
+        "https://verified-fix-six.vercel.app,http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000,http://127.0.0.1:3000"
+    )
+
+    @property
+    def cors_origins_list(self) -> list[str]:
+        origins = [orig.strip() for orig in self.CORS_ORIGINS.split(",") if orig.strip()]
+        required = [
+            "https://verified-fix-six.vercel.app",
+            "http://localhost:5173",
+            "http://127.0.0.1:5173",
+        ]
+        for req in required:
+            if req not in origins:
+                origins.append(req)
+        return origins
+
     # Demo and target configurations
     DOCVAULT_TARGET_URL: str = os.getenv("DOCVAULT_TARGET_URL", "http://localhost:8000")
     

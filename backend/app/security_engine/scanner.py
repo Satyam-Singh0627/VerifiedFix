@@ -7,12 +7,15 @@ from app.services.document_service import get_security_state, get_document_with_
 from app.security_engine.exploit_runner import run_idor_exploit_reproduction
 from app.security_engine.audit_logger import log_audit_event
 from app.services.ai_service import ai_service
+from app.core.config import settings
 
-def execute_security_scan(db: Session, target_url: str = "http://localhost:8000") -> Scan:
+def execute_security_scan(db: Session, target_url: str = None) -> Scan:
     """
     Executes an active, deterministic security scan against the local DocVault target.
     Examines authorization boundaries across Alice, Bob, Carol, Admin, and unauthenticated actors.
     """
+    if target_url is None:
+        target_url = settings.DOCVAULT_TARGET_URL
     now_utc = datetime.datetime.now(datetime.timezone.utc)
     scan_uuid = f"SCAN-{now_utc.strftime('%Y%m%d')}-{str(uuid.uuid4())[:8].upper()}"
     started_at = now_utc

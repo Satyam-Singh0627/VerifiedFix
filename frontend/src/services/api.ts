@@ -10,7 +10,32 @@ import {
   User
 } from '../types';
 
-const API_BASE = '/api';
+const rawBase = (import.meta.env.VITE_API_BASE_URL || '').trim().replace(/\/+$/, '');
+const API_BASE = rawBase ? (rawBase.endsWith('/api') ? rawBase : `${rawBase}/api`) : '/api';
+
+export const getApiBaseUrl = (): string => API_BASE;
+
+export const getTargetHost = (): string => {
+  if (rawBase) {
+    try {
+      return new URL(rawBase).host;
+    } catch {
+      return rawBase;
+    }
+  }
+  return typeof window !== 'undefined' ? window.location.host : 'localhost:8000';
+};
+
+export const getTargetUrl = (): string => {
+  if (rawBase) {
+    try {
+      return new URL(rawBase).origin;
+    } catch {
+      return rawBase;
+    }
+  }
+  return typeof window !== 'undefined' ? window.location.origin : 'http://localhost:8000';
+};
 
 // Helper for standard JSON fetch
 async function request<T>(endpoint: string, options?: RequestInit): Promise<T> {
@@ -25,6 +50,7 @@ async function request<T>(endpoint: string, options?: RequestInit): Promise<T> {
   }
 
   const res = await fetch(`${API_BASE}${endpoint}`, {
+    credentials: 'include',
     ...options,
     headers,
   });

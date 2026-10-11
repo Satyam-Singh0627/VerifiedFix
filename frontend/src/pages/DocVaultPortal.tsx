@@ -63,24 +63,13 @@ export const DocVaultPortal: React.FC = () => {
   const [deleteDocId, setDeleteDocId] = useState<number | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
 
-  useEffect(() => {
-    initUser();
-  }, []);
-
-  const initUser = async () => {
-    const saved = localStorage.getItem('docvault_user');
-    if (saved) {
-      try {
-        const u = JSON.parse(saved);
-        setCurrentUser(u);
-        loadDocuments();
-        return;
-      } catch (e) {
-        // fallback
-      }
+  const loadDocuments = async () => {
+    try {
+      const docs = await api.getDocuments();
+      setDocuments(docs);
+    } catch (err) {
+      console.error(err);
     }
-    // Default to Bob so judges immediately experience the IDOR scenario
-    handleSwitchUser('bob');
   };
 
   const handleSwitchUser = async (username: string) => {
@@ -101,14 +90,25 @@ export const DocVaultPortal: React.FC = () => {
     }
   };
 
-  const loadDocuments = async () => {
-    try {
-      const docs = await api.getDocuments();
-      setDocuments(docs);
-    } catch (err) {
-      console.error(err);
+  const initUser = async () => {
+    const saved = localStorage.getItem('docvault_user');
+    if (saved) {
+      try {
+        const u = JSON.parse(saved);
+        setCurrentUser(u);
+        loadDocuments();
+        return;
+      } catch {
+        // fallback
+      }
     }
+    // Default to Bob so judges immediately experience the IDOR scenario
+    handleSwitchUser('bob');
   };
+
+  useEffect(() => {
+    initUser();
+  }, []);
 
   const handleTestDirectAccess = async () => {
     const id = parseInt(manualDocId, 10);

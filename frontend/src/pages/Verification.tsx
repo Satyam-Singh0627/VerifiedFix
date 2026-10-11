@@ -31,10 +31,6 @@ export const Verification: React.FC<VerificationProps> = ({ onStateChange }) => 
   const [running, setRunning] = useState(false);
   const [filterCategory, setFilterCategory] = useState<'all' | 'security' | 'regression'>('all');
 
-  useEffect(() => {
-    loadLatestVerification();
-  }, []);
-
   const loadLatestVerification = async () => {
     try {
       setLoading(true);
@@ -51,6 +47,10 @@ export const Verification: React.FC<VerificationProps> = ({ onStateChange }) => 
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    loadLatestVerification();
+  }, []);
 
   const handleRunVerification = async () => {
     try {

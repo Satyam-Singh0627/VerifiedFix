@@ -13,7 +13,7 @@ import {
   Clock,
   Sparkles
 } from 'lucide-react';
-import { api } from '../services/api';
+import { api, getTargetUrl } from '../services/api';
 import { Scan } from '../types';
 import { useToast } from '../context/ToastContext';
 import { ContextualHelp } from '../components/ContextualHelp';
@@ -117,7 +117,7 @@ export const Scans: React.FC = () => {
           <div>
             <div className="text-[10px] text-[#A6B0A7] uppercase font-bold">Target Application</div>
             <div className="text-xs font-bold text-[#F1F0E8]">DocVault Enterprise Portal</div>
-            <div className="text-[10px] text-[#54D6BE] font-mono">http://localhost:8000 (Isolated Sandbox)</div>
+            <div className="text-[10px] text-[#54D6BE] font-mono">{getTargetUrl()} (Isolated Sandbox)</div>
           </div>
         </div>
 

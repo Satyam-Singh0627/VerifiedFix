@@ -12,7 +12,7 @@ import {
   Unlock,
   Info
 } from 'lucide-react';
-import { api } from '../services/api';
+import { api, getTargetHost } from '../services/api';
 import { Scan, Finding } from '../types';
 import { ContextualHelp } from '../components/ContextualHelp';
 import { useToast } from '../context/ToastContext';
@@ -181,7 +181,7 @@ export const Findings: React.FC = () => {
                   <div className="text-[10px] text-[#A6B0A7] font-bold uppercase">HTTP Request Sent</div>
                   <div className="text-[#54D6BE] font-semibold">GET /api/documents/12 HTTP/1.1</div>
                   <div className="text-[#A6B0A7] text-[11px]">Authorization: Bearer bob_session_token [REDACTED]</div>
-                  <div className="text-[#A6B0A7]/70 text-[11px]">Host: localhost:8000</div>
+                  <div className="text-[#A6B0A7]/70 text-[11px]">Host: {getTargetHost()}</div>
                 </div>
 
                 {/* Response */}

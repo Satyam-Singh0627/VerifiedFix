@@ -1,9 +1,11 @@
 import puppeteer from 'puppeteer-core';
 
 const CHROME_PATH = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
+const TARGET_URL = process.env.TEST_URL || 'http://localhost:5173/';
 
 async function runBrowserTest() {
   console.log('--- STARTING E2E BROWSER AUTOMATION ACCEPTANCE TEST ---');
+  console.log(`Target URL: ${TARGET_URL}`);
   const browser = await puppeteer.launch({
     executablePath: CHROME_PATH,
     headless: true,
@@ -15,8 +17,8 @@ async function runBrowserTest() {
 
   try {
     // 1. Load Homepage
-    console.log('[STEP 1] Navigating to http://localhost:5173/...');
-    await page.goto('http://localhost:5173/', { waitUntil: 'networkidle0', timeout: 15000 });
+    console.log(`[STEP 1] Navigating to ${TARGET_URL}...`);
+    await page.goto(TARGET_URL, { waitUntil: 'networkidle0', timeout: 15000 });
 
     const title = await page.title();
     console.log(`Page title: "${title}"`);
